@@ -1,0 +1,42 @@
+---
+title: "Leaflet Deliverable"
+author: "Martín Dévora Pajares"
+date: "1 de junio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Leaflet Deliverable
+
+Create a web page using R Markdown that features a map created with Leaflet.
+
+Host your webpage on either GitHub Pages, RPubs, or NeoCities.
+
+Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet. We would love to see you show off your creativity!
+
+```{r cars}
+library(leaflet)
+```
+
+## Creating data to be plotted
+
+We will present the list of the seven greatest asteroid impact craters in the Earth, plotting them in a world map and printing circles around their impact place according to their diameters.
+
+```{r echo=FALSE}
+crater_list <-data.frame(name = c("Vredefort", "Sudbury", "Chicxulub", "Popigai", "Manicouagan", "Acraman", "Morokweng"),
+                         wiki = c("https://en.wikipedia.org/wiki/Vredefort_crater", "https://en.wikipedia.org/wiki/Sudbury_Basin", "https://en.wikipedia.org/wiki/Chicxulub_crater", "https://en.wikipedia.org/wiki/Popigai_crater", "https://en.wikipedia.org/wiki/Manicouagan_Reservoir", "https://en.wikipedia.org/wiki/Acraman_crater", "https://en.wikipedia.org/wiki/Morokweng_crater"),
+                         crater_size = c(300, 250, 180, 100, 100, 90, 70),
+                         lat = c(-27, 46.36, 21.20, 71.39, 51.23, -32.1, -26.28),
+                         lng = c(27.30, -81.11, -89.30, 111.11, -68.42, 135.27, 23.32))
+```
+
+## Plotting craters given sizes
+```{r echo=FALSE}
+crater_list %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 4, radius = crater_list$crater_size * 1000, color = c('red'), popup = sprintf("Name: %s, Size (km): %s, More info: %s",crater_list$name,crater_list$crater_size, crater_list$wiki))
+```
